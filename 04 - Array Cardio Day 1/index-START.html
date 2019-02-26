@@ -43,9 +43,7 @@
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
-    const sum = inventors.reduce((a,b) => {
-      return a + b.passed - b.year
-    }, 0)
+    const sum = inventors.reduce((a,b) => a + b.passed - b.year, 0)
     
     // 5. Sort the inventors by years lived
     const byAge = inventors.sort((a,b) => (a.passed - a.year) > (b.passed - b.year) ? 1 : -1)
@@ -62,7 +60,6 @@
       const [bLast, bFirst] = a.split(', ');
       return aLast > bLast ? -1 : 1
     })
-    console.log(alphabetically)
     
     // 8. Reduce Exercise
     // Sum up the instances of each of these
@@ -72,7 +69,6 @@
       if (!a[b]) a[b] = 1
       return a
     }, {})
-    console.log(tallys)
 
   </script>
 </body>
