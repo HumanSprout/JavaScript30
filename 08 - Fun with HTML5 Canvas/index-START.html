@@ -31,12 +31,10 @@
         ctx.lineTo(e.offsetX, e.offsetY);
         ctx.stroke();
         [lastX, lastY] = [e.offsetX, e.offsetY];
-        hueDegree = (hueDegree + 1) % 360;
-        width = Math.ceil(
-          50 + 50 * Math.sin(((2 * Math.PI) / 360) * hueDegree)
+        hueDegree++;
+        ctx.lineWidth = Math.ceil(
+          50 + 50 * Math.sin(((2 * Math.PI) / 360) * hueDegree + 180)
         );
-        console.log(`${hueDegree} ${width}`);
-        ctx.lineWidth = width;
       }
 
       canvas.addEventListener('mousedown', e => {
