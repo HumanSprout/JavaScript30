@@ -1,46 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Console Tricks!</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Console Tricks!</title>
+  </head>
+  <body>
+    <p onClick="makeGreen()">×BREAK×DOWN×</p>
 
-  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+    <script>
+      const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
 
-  <script>
-    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+      function makeGreen() {
+        const p = document.querySelector('p');
+        p.style.color = '#BADA55';
+        p.style.fontSize = '50px';
+      }
 
-    function makeGreen() {
-      const p = document.querySelector('p');
-      p.style.color = '#BADA55';
-      p.style.fontSize = '50px';
-    }
+      let whatever = 'whatever';
 
-    // Regular
+      // Regular
+      console.log(whatever);
 
-    // Interpolated
+      // Interpolated
+      console.log('yeah sure %s, pal', whatever);
+      // Styled
+      console.log('%c HUH?', 'font-size: 20px; color: orange;');
 
-    // Styled
+      // warning!
+      console.warn('WHEE');
+      // Error :|
+      console.log('WHOO');
 
-    // warning!
+      // Info
+      console.info('fun fact!');
 
-    // Error :|
+      // Testing
+      console.assert(true === false, 'true does not equal false');
+      // clearing
+      console.clear();
 
-    // Info
+      // Viewing DOM Elements
+      console.dir(document.querySelector('p'));
+      // Grouping together
+      dogs.forEach(dog => {
+        console.group(`${dog.name}`);
+        console.log(`${dog.name} is ${dog.age} years old`);
+        console.log(`that's ${dog.age * 7} in dog years`);
+        console.groupEnd();
+      });
 
-    // Testing
-
-    // clearing
-
-    // Viewing DOM Elements
-
-    // Grouping together
-
-    // counting
-
-    // timing
-
-  </script>
-</body>
+      // counting
+      console.count('one');
+      console.count('two');
+      console.count('two');
+      console.count('three');
+      console.count('three');
+      console.count('three');
+      // timing
+      let i = 0;
+      console.time();
+      while (i < 10000) {
+        i++;
+      }
+      console.timeEnd();
+      // bonus
+      console.table(dogs);
+    </script>
+  </body>
 </html>
