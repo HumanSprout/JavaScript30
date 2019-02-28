@@ -1,19 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>HTML5 Canvas</title>
-</head>
-<body>
-<canvas id="draw" width="800" height="800"></canvas>
-<script>
-</script>
+  <head>
+    <meta charset="UTF-8" />
+    <title>HTML5 Canvas</title>
+  </head>
+  <body>
+    <canvas id="draw" width="800" height="800"></canvas>
+    <script>
+      const canvas = document.querySelector('#draw');
+      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+      const ctx = canvas.getContext('2d');
+      ctx.strokeStyle = '#BAD4A55';
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.lineWidth = 50;
 
-<style>
-  html, body {
-    margin: 0;
-  }
-</style>
+      let isDrawing = false;
+      let lastX = 0;
+      let lastY = 0;
+      let hueDegree = 0;
+      let width = ctx.lineWidth;
 
-</body>
+      function draw(e) {
+        if (!isDrawing) return;
+        // console.log(e);
+        ctx.strokeStyle = `hsl(${hueDegree}, 100%, 50%)`;
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+        hueDegree = (hueDegree + 1) % 360;
+        width = Math.ceil(
+          50 + 50 * Math.sin(((2 * Math.PI) / 360) * hueDegree)
+        );
+        console.log(`${hueDegree} ${width}`);
+        ctx.lineWidth = width;
+      }
+
+      canvas.addEventListener('mousedown', e => {
+        isDrawing = true;
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+      });
+
+      canvas.addEventListener('mousemove', draw);
+      canvas.addEventListener('mouseup', () => (isDrawing = false));
+      canvas.addEventListener('mouseout', () => (isDrawing = false));
+    </script>
+
+    <style>
+      html,
+      body {
+        margin: 0;
+      }
+    </style>
+  </body>
 </html>
