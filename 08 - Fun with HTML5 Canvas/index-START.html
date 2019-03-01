@@ -24,7 +24,6 @@
 
       function draw(e) {
         if (!isDrawing) return;
-        // console.log(e);
         ctx.strokeStyle = `hsl(${hueDegree}, 100%, 50%)`;
         ctx.beginPath();
         ctx.moveTo(lastX, lastY);
@@ -33,8 +32,18 @@
         [lastX, lastY] = [e.offsetX, e.offsetY];
         hueDegree++;
         ctx.lineWidth = Math.ceil(
-          50 + 50 * Math.sin(((2 * Math.PI) / 360) * hueDegree + 180)
+          // sine wave
+          // 50 + 50 * Math.sin(((2 * Math.PI) / 360) * hueDegree + 180)
+          // triangle wave with flat troughs
+          // ((2 * 100) / 360) * (Math.abs((hueDegree % 360) - 360 / 2) - 360 / 4)
+          // saw tooth wave
+          // Math.abs((hueDegree % 200) - 200)
+          // "shark fin" wave
+          // Math.abs((hueDegree % 200) - 50)
+          // triangle wave
+          Math.abs((hueDegree % 200) - 100)
         );
+        console.log(ctx.lineWidth);
       }
 
       canvas.addEventListener('mousedown', e => {
