@@ -5,7 +5,7 @@
     <title>HTML5 Canvas</title>
   </head>
   <body>
-    <canvas id="draw" width="800" height="800"></canvas>
+    <canvas id="draw" width="800" height="800"> </canvas>
     <script>
       const canvas = document.querySelector('#draw');
       canvas.height = window.innerHeight;
@@ -15,12 +15,36 @@
       ctx.lineJoin = 'round';
       ctx.lineCap = 'round';
       ctx.lineWidth = 50;
+      let activeMode = 'sine';
+
+      let modes = {
+        triangle: function(x) {
+          return Math.ceil(Math.abs((hueDegree % 200) - 100));
+        },
+        sine: function(x) {
+          return Math.ceil(
+            50 + 50 * Math.sin(((2 * Math.PI) / 360) * hueDegree + 180)
+          );
+        },
+        saw: function(x) {
+          return Math.ceil(Math.abs((hueDegree % 200) - 200));
+        },
+        shark: function(x) {
+          return Math.ceil(Math.abs((hueDegree % 200) - 50));
+        }
+      };
+
+      let toggleMode = mode => {
+        console.log(`toggling mode to ${mode}`);
+        activeMode = mode;
+      };
 
       let isDrawing = false;
       let lastX = 0;
       let lastY = 0;
       let hueDegree = 0;
       let width = ctx.lineWidth;
+      let calculateY = modes.triangle;
 
       function draw(e) {
         if (!isDrawing) return;
@@ -31,19 +55,7 @@
         ctx.stroke();
         [lastX, lastY] = [e.offsetX, e.offsetY];
         hueDegree++;
-        ctx.lineWidth = Math.ceil(
-          // sine wave
-          // 50 + 50 * Math.sin(((2 * Math.PI) / 360) * hueDegree + 180)
-          // triangle wave with flat troughs
-          // ((2 * 100) / 360) * (Math.abs((hueDegree % 360) - 360 / 2) - 360 / 4)
-          // saw tooth wave
-          // Math.abs((hueDegree % 200) - 200)
-          // "shark fin" wave
-          // Math.abs((hueDegree % 200) - 50)
-          // triangle wave
-          Math.abs((hueDegree % 200) - 100)
-        );
-        console.log(ctx.lineWidth);
+        ctx.lineWidth = modes[activeMode](hueDegree);
       }
 
       canvas.addEventListener('mousedown', e => {
@@ -54,12 +66,21 @@
       canvas.addEventListener('mousemove', draw);
       canvas.addEventListener('mouseup', () => (isDrawing = false));
       canvas.addEventListener('mouseout', () => (isDrawing = false));
+      document.addEventListener('keydown', e => {
+        if (e.altKey) return toggleMode('sine');
+        if (e.ctrlKey) return toggleMode('triangle');
+        if (e.shiftKey) return toggleMode('saw');
+        if (e.metaKey) return toggleMode('shark');
+      });
     </script>
 
     <style>
       html,
       body {
         margin: 0;
+      }
+      .hidden {
+        display: none;
       }
     </style>
   </body>
