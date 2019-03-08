@@ -1,12 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Key Detection</title>
-  <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
-</head>
-<body>
-<script>
-</script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Key Detection</title>
+    <script
+      type="text/javascript"
+      src="http://www.cornify.com/js/cornify.js"
+    ></script>
+  </head>
+  <body>
+    <script>
+      const code = [
+        'ArrowUp',
+        'ArrowUp',
+        'ArrowDown',
+        'ArrowDown',
+        'ArrowLeft',
+        'ArrowRight',
+        'ArrowLeft',
+        'ArrowRight',
+        'a',
+        'b',
+        'Enter'
+      ];
+
+      let keyedCode = [];
+
+      function checkForCode(e) {
+        keyedCode.push(e.key);
+        if (keyedCode[keyedCode.length - 1] !== code[keyedCode.length - 1])
+          keyedCode = [];
+        if (keyedCode.length === code.length) {
+          alert('power up!');
+          cornify_add();
+          keyedCode = [];
+        }
+      }
+
+      window.addEventListener('keydown', checkForCode);
+    </script>
+  </body>
 </html>
