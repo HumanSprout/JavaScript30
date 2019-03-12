@@ -1,56 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>JS Reference VS Copy</title>
-</head>
-<body>
-
-  <script>
-    // start with strings, numbers and booleans
-
-    // Let's say we have an array
-    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
-
-    // and we want to make a copy of it.
-
-    // You might think we can just do something like this:
-
-    // however what happens when we update that array?
-
-    // now here is the problem!
-
-    // oh no - we have edited the original array too!
-
-    // Why? It's because that is an array reference, not an array copy. They both point to the same array!
-
-    // So, how do we fix this? We take a copy instead!
-
-    // one way
-
-    // or create a new array and concat the old one in
-
-    // or use the new ES6 Spread
-
-    // now when we update it, the original one isn't changed
-
-    // The same thing goes for objects, let's say we have a person object
-
-    // with Objects
-    const person = {
-      name: 'Wes Bos',
-      age: 80
-    };
-
-    // and think we make a copy:
-
-    // how do we take a copy instead?
-
-    // We will hopefully soon see the object ...spread
-
-    // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
-
-  </script>
-
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>JS Reference VS Copy</title>
+  </head>
+  <body>
+    <script>
+      // primitives are passed by value
+      let one = 1;
+      let two = one;
+      two = 2;
+      console.log(one); // 1
+      console.log(two); // 2
+      // objects are passed by reference
+      let nums = { one, two };
+      let moreNums = nums;
+      nums.three = 3;
+      console.log(moreNums.three); // 3
+      // use the spread operator (es6) to create new objects / arrays
+      let evenMoreNums = { ...moreNums, four: 4 };
+      // or object.assign (es5), either way prevents unwanted mutations
+      evenMoreNumsThanBefore = Object.assign({}, evenMoreNums, { five: 5 });
+    </script>
+  </body>
 </html>
